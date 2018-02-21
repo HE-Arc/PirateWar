@@ -1,0 +1,7 @@
+# QA
+flake8
+flake8-docstrings
+isort
+
+# Project
+Django

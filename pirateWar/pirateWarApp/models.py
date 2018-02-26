@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+
 class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     money = models.IntegerField()
@@ -11,10 +12,6 @@ class Player(models.Model):
     iron = models.IntegerField()
     crew = models.IntegerField()
     cannon = models.IntegerField()
-
-
-class Activity(models.Model):
-    pass
 
 
 class Ship(models.Model):
@@ -25,3 +22,16 @@ class Ship(models.Model):
     cannon = models.IntegerField()
     life = models.IntegerField()
     currentActivity = models.ForeignKey(Activity, on_delete=models.CASCADE)
+
+
+class Activity(models.Model):
+    category = models.ForeignKey(Category)
+    rewardGold = models.IntegerField()
+    rewardWood = models.IntegerField()
+    rewardIron = models.IntegerField()
+    level = models.IntegerField()
+    duration = models.DurationField()
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=50)

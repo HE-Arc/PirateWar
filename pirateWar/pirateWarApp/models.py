@@ -14,6 +14,19 @@ class Player(models.Model):
     cannon = models.IntegerField()
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+
+
+class Activity(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    rewardGold = models.IntegerField()
+    rewardWood = models.IntegerField()
+    rewardIron = models.IntegerField()
+    level = models.IntegerField()
+    duration = models.DurationField()
+
+
 class Ship(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
@@ -22,16 +35,3 @@ class Ship(models.Model):
     cannon = models.IntegerField()
     life = models.IntegerField()
     currentActivity = models.ForeignKey(Activity, on_delete=models.CASCADE)
-
-
-class Activity(models.Model):
-    category = models.ForeignKey(Category)
-    rewardGold = models.IntegerField()
-    rewardWood = models.IntegerField()
-    rewardIron = models.IntegerField()
-    level = models.IntegerField()
-    duration = models.DurationField()
-
-
-class Category(models.Model):
-    name = models.CharField(max_length=50)

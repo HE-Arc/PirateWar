@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}PirateWar{% endblock %}
+
+{% block content %}
+    <h1>{{ player.user.username }}</h1>
+
+    <h2>Resources</h2>
+    <ul>
+        <li>Money : {{ player.money }}</li>
+        <li>Crew : {{ player.crew }}</li>
+        <li>Wood : {{ player.wood }}</li>
+        <li>Iron : {{ player.iron }}</li>
+    </ul>
+
+    <h2>Ships ({{ nbships }})</h2>
+
+    <ul>
+        {% for ship in ships %}
+
+            <li>{{ ship.name }} (<a href="">edit</a>, <a href="">delete</a>)
+            </li>
+
+        {% endfor %}
+    </ul>
+
+    <h2>Actions</h2>
+    <form method="post" action="{% url 'play' %}">
+        {% csrf_token %}
+        <label for="shipname">Ship name</label>
+        <input id="shipname" type="text" name="shipname">
+        <input type="submit" value="Buy ship">
+    </form>
+
+    <h2>Quests</h2>
+    <a></a>
+
+{% endblock %}

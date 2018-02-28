@@ -11,7 +11,7 @@ class Player(models.Model):
     wood = models.IntegerField()
     iron = models.IntegerField()
     crew = models.IntegerField()
-    cannon = models.IntegerField()
+    cannons = models.IntegerField()
 
 
 class Category(models.Model):
@@ -30,8 +30,8 @@ class Activity(models.Model):
 class Ship(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
-    crew = models.IntegerField()
-    level = models.IntegerField()
-    cannon = models.IntegerField()
-    life = models.IntegerField()
-    currentActivity = models.ForeignKey(Activity, on_delete=models.CASCADE)
+    crew = models.IntegerField(default=0)
+    level = models.IntegerField(default=1)
+    cannon = models.IntegerField(default=0)
+    life = models.IntegerField(default=100)
+    # currentActivity = models.ForeignKey(Activity, on_delete=models.CASCADE, default=0)

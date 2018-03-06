@@ -37,7 +37,8 @@ class PlayView(generic.TemplateView):
         player = self.get_player(user)
         ships = Ship.objects.filter(player=player).all()
         nbships = len(ships)
-        return render(request, self.template_name, {'player': player, 'nbships': nbships, 'ships': ships})
+        return render(request, self.template_name,
+                      {'player': player, 'nbships': nbships, 'ships': ships})
 
 
 class ShipDeleteView(generic.DeleteView):
@@ -70,6 +71,7 @@ class ShipCreateView(generic.CreateView):
             Ship.objects.create(player=player, name=name)
             player.wood = player.wood - 10
             player.save()
+
         # TODO Error message
         return redirect('play')
 

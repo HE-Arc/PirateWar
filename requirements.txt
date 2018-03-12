@@ -5,3 +5,4 @@ isort
 
 # Project
 Django
+django-registration

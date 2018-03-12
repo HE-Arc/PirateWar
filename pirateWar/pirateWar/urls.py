@@ -21,7 +21,7 @@ from django.contrib.auth import views as auth_views
 from pirateWarApp.views import *
 
 urlpatterns = [
-    path('', HomeView.as_view(), name='home'),
+    path('', login_required(HomeView.as_view()), name='home'),
     path('about/', AboutView.as_view(), name='about'),
     path('play/', login_required(PlayView.as_view()), name='play'),
     path('play/delete-ship/<int:pk>',
@@ -31,7 +31,6 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('accounts/', include('registration.backends.simple.urls')),
     path('accounts/profile/', login_required(ProfileView.as_view()), name='profile'),
-    path('accounts/logout/', auth_views.LogoutView.as_view(template_name='registration/logged_out.html'),
-         name='logout')
+    path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout')
 
 ]

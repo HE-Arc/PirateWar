@@ -5,6 +5,7 @@
 
 {% block content %}
 
+
 <div class="container">
     <h1>{{ player.user.username }}</h1>
 </div>
@@ -39,7 +40,7 @@
                 </tbody>
             </table>
             <h2>Actions</h2>
-            <form method="post" action="{% url 'play' %}">
+            <form method="post" action="{% url 'create-ship' %}">
                 {% csrf_token %}
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Ship name"
@@ -52,14 +53,13 @@
         </div>
         <div class="col">
             <h2>Ships ({{ nbships }})</h2>
-
             <table class="table">
                 <tbody>
                 {% for ship in ships %}
                 <tr>
                     <th scope="row">{{ ship.name }}</th>
                     <td><a href="">edit</a></td>
-                    <td><a href="">delete</a></td>
+                    <td><a  href="{% url 'delete-ship' ship.pk %}">delete</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -72,5 +72,15 @@
     </div>
 </div>
 
+
+
+    {% if messages %}
+        <h2>Messages</h2>
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
 {% endblock %}

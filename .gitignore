@@ -23,3 +23,5 @@ media
 ### virtualenv ###
 djangoapp
 
+### RUBY ###
+Gemfile.lock

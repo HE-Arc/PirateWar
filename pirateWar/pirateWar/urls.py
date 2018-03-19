@@ -18,7 +18,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import include, path
 from django.contrib.auth import views as auth_views
 
-from pirateWarApp.views import *
+from pirateWarApp.views import HomeView, AboutView, PlayView, ShipDeleteView, ShipCreateView, ProfileView
 
 urlpatterns = [
     path('', login_required(HomeView.as_view()), name='home'),

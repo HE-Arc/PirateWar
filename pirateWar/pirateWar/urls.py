@@ -18,16 +18,19 @@ from django.contrib.auth.decorators import login_required
 from django.urls import include, path
 from django.contrib.auth import views as auth_views
 
-from pirateWarApp.views import HomeView, AboutView, PlayView, ShipDeleteView, ShipCreateView, ProfileView
+from pirateWarApp.views import HomeView, AboutView, PlayView, ShipDeleteView, ShipCreateView, ShipUpdateView, \
+    ProfileView
 
 urlpatterns = [
     path('', login_required(HomeView.as_view()), name='home'),
     path('about/', AboutView.as_view(), name='about'),
     path('play/', login_required(PlayView.as_view()), name='play'),
-    path('play/delete-ship/<int:pk>',
+    path('play/ship/<int:pk>/delete',
          login_required(ShipDeleteView.as_view()), name='delete-ship'),
-    path('play/create-ship/',
+    path('play/ship/create',
          login_required(ShipCreateView.as_view()), name='create-ship'),
+    path('play/ship/<int:pk>/edit',
+         login_required(ShipUpdateView.as_view()), name='edit-ship'),
     path('admin/', admin.site.urls, name='admin'),
     path('accounts/', include('registration.backends.simple.urls')),
     path('accounts/profile/', login_required(ProfileView.as_view()), name='profile'),

@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import TemplateView
-from pirateWarApp.models import *
+from django.contrib import messages
+from pirateWarApp.models import Ship, Player, User, Category, Activity
 
 
 # Create your views here.
@@ -72,7 +73,10 @@ class ShipCreateView(generic.CreateView):
             player.wood = player.wood - 10
             player.save()
 
-        # TODO Error message
+        else:
+            # TODO Error message
+            messages.add_message(request, messages.ERROR, 'Not enough wood')
+
         return redirect('play')
 
 
@@ -80,6 +84,7 @@ class ShipUpdateView(generic.UpdateView):
     model = Ship
     success_url = reverse_lazy('play')
     template_name = 'edit_ship.html'
+    fields = ['name', 'crew', 'cannon', 'life']
 
 
 class ShipListView(generic.ListView):

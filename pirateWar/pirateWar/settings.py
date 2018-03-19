@@ -24,7 +24,7 @@ SECRET_KEY = '_a#^@e+%s*007_@(0nf+hl4wn%#6y(d&lhb=23)y@=3cz#218('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['piratewars.srvz-webapp.he-arc.ch']
+ALLOWED_HOSTS = ['piratewars.srvz-webapp.he-arc.ch', '127.0.0.1']
 
 # Application definition
 

@@ -34,42 +34,27 @@
             </tr>
             </tbody>
         </table>
+        
         <h2>Actions</h2>
-        <form method="post" action="{% url 'create-ship' %}">
-            {% csrf_token %}
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Ship name"
-                       aria-label="Input group example" aria-describedby="btnGroupAddon" id="shipname" name="shipname">
-                <div class="input-group-prepend">
-                    <input type="submit" class="btn btn-primary" value="Buy ship">
-                </div>
 
-                <div class="row mh1">
-                    <div class="col-2">Iron</div>
-                    <div class="col"><img src="{% static 'img/iron.png' %}" alt="Iron" title="Iron"/></div>
-                    <div class="col">{{ player.iron }}</div>
+        <div class="row">
+            <form class="form-group" method="post" action="{% url 'create-ship' %}">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Ship name"
+                           aria-label="Input group example" aria-describedby="btnGroupAddon" id="shipname"
+                           name="shipname">
+                    <div class="input-group-prepend">
+                        <input type="submit" class="btn btn-primary" value="Buy ship">
+                    </div>
                 </div>
+            </form>
+        </div>
+        <div class="row">
+            <a class="btn btn-primary" href="{% url 'select-quest' %}">Select quest</a>
+        </div>
 
-                <h2>Actions</h2>
 
-                <div class="row">
-                    <form class="form-group" method="post" action="{% url 'create-ship' %}">
-                        {% csrf_token %}
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Ship name"
-                                   aria-label="Input group example" aria-describedby="btnGroupAddon" id="shipname"
-                                   name="shipname">
-                            <div class="input-group-prepend">
-                                <input type="submit" class="btn btn-primary" value="Buy ship">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="row">
-                    <a class="btn btn-primary" href="{% url 'select-quest' %}">Select quest</a>
-                </div>
-
-            </div>
         </form>
     </div>
     <div class="col">

@@ -23,6 +23,8 @@ from pirateWarApp.views import HomeView, AboutView, PlayView, ShipDeleteView, Sh
 
 from registration.views import RegistrationView
 
+from registration.views import RegistrationView
+
 urlpatterns = [
     path('', login_required(HomeView.as_view()), name='home'),
     path('about/', AboutView.as_view(), name='about'),

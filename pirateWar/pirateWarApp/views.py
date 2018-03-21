@@ -56,17 +56,10 @@ class ShipDeleteView(UserPassesTestMixin, generic.DeleteView):
         return cond
 
 
-class ShipCreateView(UserPassesTestMixin, generic.CreateView):
+class ShipCreateView(generic.CreateView):
     template_name = 'play.html'
     model = Ship
     fields = ['name']
-
-    def test_func(self):
-        self.object = self.get_object()
-        cond = self.object.player.user == self.request.user
-        if not cond:
-            messages.add_message(self.request, messages.ERROR, 'Wrong user')
-        return cond
 
     def post(self, request, *args, **kwargs):
         name = request.POST.get('shipname', 'my ship')

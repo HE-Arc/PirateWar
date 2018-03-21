@@ -9,37 +9,33 @@
     <div class="container">
         <h1>{{ player.user.username }}</h1>
     </div>
-
     <div class="container">
         <div class="row">
             <div class="col">
                 <h2>Resources</h2>
-                <table class="table">
-                    <tbody>
-                    <tr>
-                        <th scope="row"><img src="{% static 'img/coin.png' %}" alt="Money" title="Money"/></th>
-                        <td>Money</td>
-                        <td>{{ player.money }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><img src="{% static 'img/sword_little.png' %}" alt="Crew" title="Crew"
-                                             height="30"/>
-                        </th>
-                        <td>Crew</td>
-                        <td>{{ player.crew }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><img src="{% static 'img/wood.png' %}" alt="Wood" title="Wood"/></th>
-                        <td>Wood</td>
-                        <td>{{ player.wood }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><img src="{% static 'img/iron.png' %}" alt="Iron" title="Iron"/></th>
-                        <td>Iron</td>
-                        <td>{{ player.iron }}</td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="row mh1">
+
+                    <div class="col-2">Money</div>
+                    <div class="col"><img src="{% static 'img/coin.png' %}" alt="Money" title="Money"/></div>
+                    <div class="col">{{ player.money }}</div>
+                </div>
+                <div class="row mh1">
+                    <div class="col-2">Crew</div>
+                    <div class="col"><img src="{% static 'img/sword_little.png' %}" alt="Crew" title="Crew"
+                                          height="30"/></div>
+                    <div class="col">{{ player.crew }}</div>
+                </div>
+                <div class="row mh1">
+                    <div class="col-2">Wood</div>
+                    <div class="col"><img src="{% static 'img/wood.png' %}" alt="Wood" title="Wood"/></div>
+                    <div class="col">{{ player.wood }}</div>
+                </div>
+                <div class="row mh1">
+                    <div class="col-2">Iron</div>
+                    <div class="col"><img src="{% static 'img/iron.png' %}" alt="Iron" title="Iron"/></div>
+                    <div class="col">{{ player.iron }}</div>
+                </div>
+
                 <h2>Actions</h2>
                 <form method="post" action="{% url 'create-ship' %}">
                     {% csrf_token %}
@@ -55,23 +51,20 @@
             </div>
             <div class="col">
                 <h2>Ships ({{ nbships }})</h2>
-                <table class="table">
-                    <tbody>
-                    {% for ship in ships %}
-                        <tr>
-                            <th scope="row">{{ ship.name }}</th>
-                            <td><a href="{% url 'edit-ship' ship.pk %}">edit</a></td>
-                            <td><a href="{% url 'delete-ship' ship.pk %}">delete</a></td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                {% for ship in ships %}
+                    <div class="row">
+                        <div class="col-5">{{ ship.name }}</div>
+                        <div class="col-1"><a href="{% url 'edit-ship' ship.pk %}"><i
+                                class="material-icons colorLink">build</i></a></div>
+                        <div class="col-1"><a href="{% url 'delete-ship' ship.pk %}"><i
+                                class="material-icons colorLink">delete</i></a></div>
+                    </div>
+                {% endfor %}
             </div>
             <div class="col">
                 <h2>Quests</h2>
                 <a></a>
             </div>
         </div>
-    </div>
 
 {% endblock %}

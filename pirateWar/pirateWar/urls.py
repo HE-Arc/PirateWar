@@ -35,5 +35,4 @@ urlpatterns = [
     path('accounts/', include('registration.backends.simple.urls')),
     path('accounts/profile/', login_required(ProfileView.as_view()), name='profile'),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout')
-
 ]

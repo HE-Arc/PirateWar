@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -42,53 +43,58 @@ class PlayView(generic.TemplateView):
                       {'player': player, 'nbships': nbships, 'ships': ships})
 
 
-class ShipDeleteView(generic.DeleteView):
+class ShipDeleteView(UserPassesTestMixin, generic.DeleteView):
     model = Ship
     success_url = reverse_lazy('play')
     template_name = 'ship_confirm_delete.html'
 
-    def check_user(self, user1, user2):
-        return user1 == user2
-
-    def post(self, request, *args, **kwargs):
+    def test_func(self):
         self.object = self.get_object()
-        if (self.check_user(request.user, self.object.player.user)):
-            self.object.delete()
-            return redirect('/play')
-        else:
-            return HttpResponse('401 - Unauthorized', status=401)
+        cond = self.object.player.user.username == self.request.user.username
+        if not cond:
+            messages.add_message(self.request, messages.ERROR, 'Wrong user')
+        return cond
 
 
-class ShipCreateView(generic.CreateView):
+class ShipCreateView(UserPassesTestMixin, generic.CreateView):
     template_name = 'play.html'
     model = Ship
     fields = ['name']
 
+    def test_func(self):
+        self.object = self.get_object()
+        cond = self.object.player.user == self.request.user
+        if not cond:
+            messages.add_message(self.request, messages.ERROR, 'Wrong user')
+        return cond
+
     def post(self, request, *args, **kwargs):
         name = request.POST.get('shipname', 'my ship')
         user = request.user
-        player = PlayView.get_player(user=user)
+        player = self.get_object().player
         if player.wood >= 10:
             Ship.objects.create(player=player, name=name)
             player.wood = player.wood - 10
             player.save()
 
         else:
-            # TODO Error message
             messages.add_message(request, messages.ERROR, 'Not enough wood')
 
         return redirect('play')
 
 
-class ShipUpdateView(generic.UpdateView):
+class ShipUpdateView(UserPassesTestMixin, generic.UpdateView):
     model = Ship
     success_url = reverse_lazy('play')
     template_name = 'edit_ship.html'
     fields = ['name', 'crew', 'cannon', 'life']
 
-
-class ShipListView(generic.ListView):
-    model = Ship
+    def test_func(self):
+        self.object = self.get_object()
+        cond = self.object.player.user == self.request.user
+        if not cond:
+            messages.add_message(self.request, messages.ERROR, 'Wrong user')
+        return cond
 
 
 class HomeView(TemplateView):

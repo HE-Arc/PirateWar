@@ -1,7 +1,19 @@
 body {
-    background: white url("../img/background.png") no-repeat center center fixed;
+  background: white url("../img/background.png") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+
+.mh1 div{
+    height: 2.5em;
+}
+
+.colorLink{
+    color : black;
+}
+
+.colorLink:hover{
+    color : grey;
 }

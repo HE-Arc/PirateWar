@@ -64,7 +64,7 @@ class ShipCreateView(generic.CreateView):
     def post(self, request, *args, **kwargs):
         name = request.POST.get('shipname', 'my ship')
         user = request.user
-        player = self.get_object().player
+        player = PlayView.get_player(user=user)
         if player.wood >= 10:
             Ship.objects.create(player=player, name=name)
             player.wood = player.wood - 10

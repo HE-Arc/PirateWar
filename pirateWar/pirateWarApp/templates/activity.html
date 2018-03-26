@@ -4,17 +4,27 @@
 
 {% block content %}
 
-    <h2>Quests avaible</h2>
-
-    <ul>
-        {% for activity in object_list %}
-            <li>{{ activity.category.name }}</li>
-            <li>{{ activity.rewardGold }}</li>
-            <li>{{ activity.rewardWood }}</li>
-            <li>{{ activity.rewardIron }}</li>
-            <li>{{ activity.level }}</li>
-            <li>{{ activity.duration }}</li>
-        {% endfor %}
-    </ul>
+<div class="col">
+    <h2>Activities avaible</h2>
+    <div class="row mh1">
+        <div class="col-1">Category</div>
+        <div class="col-1">Gold</div>
+        <div class="col-1">Wood</div>
+        <div class="col-1">Iron</div>
+        <div class="col-1">Level</div>
+        <div class="col-1">Duration</div>
+    </div>
+    {% for activity in object_list %}
+    <div class="row">
+        <div class="col-1">{{ activity.category.name }}</div>
+        <div class="col-1">{{ activity.rewardGold }}</div>
+        <div class="col-1">{{ activity.rewardWood }}</div>
+        <div class="col-1">{{ activity.rewardIron }}</div>
+        <div class="col-1">{{ activity.level }}</div>
+        <div class="col-1">{{ activity.duration }}</div>
+        <div class="col"><a class="" href="">Select</a></div>
+    </div>
+    {% endfor %}
+</div>
 
 {% endblock %}

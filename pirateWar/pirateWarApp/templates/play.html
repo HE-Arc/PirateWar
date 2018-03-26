@@ -9,58 +9,67 @@
 <div class="row">
     <div class="col">
         <h2>Resources</h2>
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th scope="row"><img src="{% static 'img/coin.png' %}" alt="Money" title="Money"/></th>
-                    <td>Money</td>
-                    <td>{{ player.money }}</td>
-                </tr>
-                <tr>
-                    <th scope="row"><img src="{% static 'img/sword_little.png' %}" alt="Crew" title="Crew" height="30"/>
-                    </th>
-                    <td>Crew</td>
-                    <td>{{ player.crew }}</td>
-                </tr>
-                <tr>
-                    <th scope="row"><img src="{% static 'img/wood.png' %}" alt="Wood" title="Wood"/></th>
-                    <td>Wood</td>
-                    <td>{{ player.wood }}</td>
-                </tr>
-                <tr>
-                    <th scope="row"><img src="{% static 'img/iron.png' %}" alt="Iron" title="Iron"/></th>
-                    <td>Iron</td>
-                    <td>{{ player.iron }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="row mh1">
+            <div class="col-1"><img src="{% static 'img/coin.png' %}" alt="Money" title="Money"/></div>
+            <div class="col-4"> Money</div>
+            <div class="col-3"> {{ player.money }}</div>
+        </div>
+        <div class="row mh1">
+            <div class="col-1"><img src="{% static 'img/sword_little.png' %}" alt="Crew" title="Crew" height="30"/></div>
+            <div class="col-4"> Crew</div>
+            <div class="col-3"> {{ player.crew }}</div>
+        </div>
+        <div class="row mh1">
+            <div class="col-1"><img src="{% static 'img/wood.png' %}" alt="Wood" title="Wood"/></div>
+            <div class="col-4"> Wood</div>
+            <div class="col-3"> {{ player.wood }}</div>
+        </div>
+        <div class="row mh1">
+            <div class="col-1"><img src="{% static 'img/iron.png' %}" alt="Iron" title="Iron"/></div>
+            <div class="col-4"> Iron</div>
+            <div class="col-3"> {{ player.iron }}</div>
+        </div>
+
+
         <h2>Actions</h2>
-        <form method="post" action="{% url 'create-ship' %}">
-            {% csrf_token %}
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Ship name"
-                aria-label="Input group example" aria-describedby="btnGroupAddon" id="shipname" name="shipname">
-                <div class="input-group-prepend">
-                    <input type="submit" class="btn btn-primary" value="Buy ship">
+
+        <div class="row">
+            <form class="form-group" method="post" action="{% url 'create-ship' %}">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Ship name"
+                           aria-label="Input group example" aria-describedby="btnGroupAddon" id="shipname"
+                           name="shipname">
+                    <div class="input-group-prepend">
+                        <input type="submit" class="btn btn-primary" value="Buy ship">
+                    </div>
                 </div>
-            </div>
+            </form>
+        </div>
+        <div class="row">
+            <a class="btn btn-primary" href="{% url 'select-quest' %}">Select quest</a>
+        </div>
+
+
         </form>
     </div>
     <div class="col">
         <h2>Ships ({{ nbships }})</h2>
-        <table class="table">
-            <tbody>
-                {% for ship in ships %}
-                    <div class="row">
-                        <div class="col-5">{{ ship.name }}</div>
-                        <div class="col-1"><a href="{% url 'edit-ship' ship.pk %}"><i
-                                class="material-icons colorLink">build</i></a></div>
-                        <div class="col-1"><a href="{% url 'delete-ship' ship.pk %}"><i
-                                class="material-icons colorLink">delete</i></a></div>
-                    </div>
-                {% endfor %}
-            </tbody>
-        </table>
+
+        {% for ship in ships %}
+        <div class="row mh1">
+            <div class="col-2"><img src="{% static 'img/1stship_3.png' %}" alt="Ship" title="Ship" height="30"/>
+            </div>
+            <div class="col-4">{{ ship.name }}</div>
+            <div class="col-1"><a href="{% url 'edit-ship' ship.pk %}"><img src="{% static 'img/hammer.png' %}"
+                                                                            alt="Edit" title="Edit"
+                                                                            height="25"/></a></div>
+            <div class="col-1"><a href="{% url 'delete-ship' ship.pk %}"><img src="{% static 'img/delete.png' %}"
+                                                                              alt="Delete" title="Delete"
+                                                                              height="25"/></a></div>
+        </div>
+        {% endfor %}
+
     </div>
     <div class="col">
         <h2>Quests</h2>
@@ -69,12 +78,13 @@
 </div>
 
 
-
 {% if messages %}
 <h2>Messages</h2>
 <ul class="messages">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    <li
+            {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+    </li>
     {% endfor %}
 </ul>
 {% endif %}

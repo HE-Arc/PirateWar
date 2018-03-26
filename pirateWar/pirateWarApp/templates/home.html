@@ -8,11 +8,11 @@
     {% if logged %}
         <p>Welcome back {{ username }} </p>
 
-        <a href="{% url 'play' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Start game</a>
+        <a href="{% url 'play' %}" class="btn btn-secondary btn-lg active">Start game</a>
 
     {% else %}
         <p>You need to login to continue</p>
-        <a href="{% url 'login' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Go to login page</a>
+        <a href="{% url 'login' %}" class="btn btn-dark btn-lg active">Go to login page</a>
     {% endif %}
 
 

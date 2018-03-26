@@ -34,4 +34,4 @@ class Ship(models.Model):
     level = models.IntegerField(default=1)
     cannon = models.IntegerField(default=0)
     life = models.IntegerField(default=100)
-    # currentActivity = models.ForeignKey(Activity, on_delete=models.CASCADE, default=0)
+    currentActivity = models.ForeignKey(Activity, on_delete=models.CASCADE)

@@ -7,3 +7,4 @@ admin.site.register(Player)
 admin.site.register(Category)
 admin.site.register(Activity)
 admin.site.register(Ship)
+

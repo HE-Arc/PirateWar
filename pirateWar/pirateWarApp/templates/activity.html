@@ -7,8 +7,13 @@
     <h2>Quests avaible</h2>
 
     <ul>
-        {% for publisher in object_list %}
-            <li>{{ publisher.name }}</li>
+        {% for activity in object_list %}
+            <li>{{ activity.category.name }}</li>
+            <li>{{ activity.rewardGold }}</li>
+            <li>{{ activity.rewardWood }}</li>
+            <li>{{ activity.rewardIron }}</li>
+            <li>{{ activity.level }}</li>
+            <li>{{ activity.duration }}</li>
         {% endfor %}
     </ul>
 

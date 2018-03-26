@@ -55,9 +55,9 @@ class ShipDeleteView(UserPassesTestMixin, generic.DeleteView):
             messages.add_message(self.request, messages.ERROR, 'Wrong user')
         return cond
 
-class SelectQuestView(generic.ListView):
+class ActivityListView(generic.ListView):
     model = Activity
-    template_name = "select_quest.html"
+    template_name = "activity.html"
 
 
 class ShipCreateView(generic.CreateView):

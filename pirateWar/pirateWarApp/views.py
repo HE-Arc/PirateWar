@@ -59,6 +59,17 @@ class ActivityListView(generic.ListView):
     model = Activity
     template_name = "activity.html"
 
+class SelectShipView(generic.ListView):
+    model = Ship
+    template_name = "select_ship.html"
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        player = PlayView.get_player(user)
+        ships = Ship.objects.filter(player=player,currentActivity=None).all()
+        nbships = len(ships)
+        return render(request, self.template_name,
+                      {'nbships': nbships, 'ships': ships})
 
 class ShipCreateView(generic.CreateView):
     template_name = 'play.html'

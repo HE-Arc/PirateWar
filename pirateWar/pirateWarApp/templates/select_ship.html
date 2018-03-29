@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Quests avaible{% endblock %}
+
+{% block content %}
+<div class="col">
+            <h2>Ships ({{ nbships }})</h2>
+
+            {% for ship in ships %}
+                <div class="row mh1">
+                    <div class="col-2"><img src="{% static 'img/1stship_3.png' %}" alt="Ship" title="Ship" height="30"/>
+                    </div>
+                    <div class="col-4">{{ ship.name }}</div>
+
+                </div>
+            {% endfor %}
+
+        </div>
+
+{% endblock %}

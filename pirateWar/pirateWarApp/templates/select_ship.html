@@ -5,17 +5,18 @@
 
 {% block content %}
 <div class="col">
-            <h2>Ships ({{ nbships }})</h2>
-
-            {% for ship in ships %}
-                <div class="row mh1">
-                    <div class="col-2"><img src="{% static 'img/1stship_3.png' %}" alt="Ship" title="Ship" height="30"/>
-                    </div>
-                    <div class="col-4">{{ ship.name }}</div>
-
-                </div>
-            {% endfor %}
-
+    <h2>Ships ({{ nbships }})</h2>
+    {% for ship in ships %}
+    <div class="row mh1">
+        <div class="col-2"><img src="{% static 'img/1stship_3.png' %}" alt="Ship" title="Ship" height="30"/>
         </div>
+        <div class="col-4">{{ ship.name }}</div>
+        <div class="col"><a class="" href="{% url 'add-activity' pk=pkactivity pk2=ship.pk %}">Select</a></div>
+    </div>
+    {% endfor %}
+    <div class="col">
+        <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'play' %}">Cancel</a>
+    </div>
+</div>
 
 {% endblock %}

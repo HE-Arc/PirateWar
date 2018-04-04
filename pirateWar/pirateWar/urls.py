@@ -19,7 +19,7 @@ from django.urls import include, path
 from django.contrib.auth import views as auth_views
 
 from pirateWarApp.views import HomeView, AboutView, PlayView, ShipDeleteView, ShipCreateView, ShipUpdateView, \
-    ProfileView, ActivityListView, SelectShipView
+    ProfileView, ActivityListView, SelectShipView, AddActivityView, ResultView
 
 from registration.views import RegistrationView
 
@@ -28,8 +28,11 @@ from registration.views import RegistrationView
 urlpatterns = [
     path('', login_required(HomeView.as_view()), name='home'),
     path('about/', AboutView.as_view(), name='about'),
-    path('play/activity', login_required(ActivityListView.as_view()), name='select-quest'),
+    path('play/result/<int:pk>', login_required(ResultView.as_view()), name='result'),
+    path('play/activity', login_required(ActivityListView.as_view()), name='select-activity'),
     path('play/activity/<int:pk>/selectship', login_required(SelectShipView.as_view()), name='select-ship'),
+    path('play/activity/<int:pk>/selectship/<int:pk2>/addactivity', login_required(AddActivityView.as_view()),
+         name='add-activity'),
     path('play/', login_required(PlayView.as_view()), name='play'),
     path('play/ship/<int:pk>/delete',
          login_required(ShipDeleteView.as_view()), name='delete-ship'),

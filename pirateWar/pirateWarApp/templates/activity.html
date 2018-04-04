@@ -1,25 +1,26 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Quests avaible{% endblock %}
 
 {% block content %}
 
 <div class="col">
-    <h2>Activities avaible</h2>
+    <h2>Activities available</h2>
     <div class="row mh1">
         <div class="col-1">Category</div>
-        <div class="col-1">Gold</div>
-        <div class="col-1">Wood</div>
-        <div class="col-1">Iron</div>
+        <div class="col-2">Gold <img src="{% static 'img/coin.png' %}" alt="Money" title="Money"/></div>
+        <div class="col-2">Wood <img src="{% static 'img/wood.png' %}" alt="Wood" title="Wood"/></div>
+        <div class="col-2">Iron <img src="{% static 'img/iron.png' %}" alt="Iron" title="Iron"/></div>
         <div class="col-1">Level</div>
         <div class="col-1">Duration</div>
     </div>
     {% for activity in object_list %}
     <div class="row">
         <div class="col-1">{{ activity.category.name }}</div>
-        <div class="col-1">{{ activity.rewardGold }}</div>
-        <div class="col-1">{{ activity.rewardWood }}</div>
-        <div class="col-1">{{ activity.rewardIron }}</div>
+        <div class="col-2">{{ activity.rewardGold }}</div>
+        <div class="col-2">{{ activity.rewardWood }}</div>
+        <div class="col-2">{{ activity.rewardIron }}</div>
         <div class="col-1">{{ activity.level }}</div>
         <div class="col-1">{{ activity.duration }}</div>
         <div class="col"><a class="" href="{% url 'select-ship' activity.pk %}">Select</a></div>

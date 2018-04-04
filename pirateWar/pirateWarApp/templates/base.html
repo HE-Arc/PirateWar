@@ -22,47 +22,48 @@
     </title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5" style="font-family: Oldenburg;">
-        <div class="container">
-            <a class="navbar-brand text-danger" href="{% url 'home' %}">
-                <h1>PirateWar</h1>
-            </a>
-            {% if user.is_authenticated %}
-            <h2>
-                <span  class="badge badge-secondary">{{user.username}}</span>
-            </h2>
-            {% endif %}
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                </ul>
-                <ul class="navbar-nav my-2 my-lg-0">
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'logout' %}">Logout</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'login' %}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'register' %}">Register</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5" style="font-family: Oldenburg;">
     <div class="container">
-        {% block content %}
-        <p>Default</p>
-        {% endblock %}
+        <a class="navbar-brand text-danger" href="{% url 'home' %}">
+            <h1>PirateWar</h1>
+        </a>
+        {% if user.is_authenticated %}
+        <h2>
+            <span class="badge badge-secondary">{{user.username}}</span>
+        </h2>
+        {% endif %}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <ul class="navbar-nav my-2 my-lg-0">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'register' %}">Register</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
+</nav>
+
+
+<div class="container">
+    {% block content %}
+    <p>Default</p>
+    {% endblock %}
+</div>
 
 
 </body>

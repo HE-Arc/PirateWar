@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Result{% endblock %}
+
+{% block content %}
+
+<div class="col">
+    {% if succes %}
+    <h1>Activity complete</h1>
+    {% else %}
+    <h1>Ship destroyed<img src="{% static 'img/ship_sink.png' %}" alt="Ship sinking" title="Ship sinking" height="100"/>
+    </h1>
+    {% endif %}
+</div>
+<div class="col">
+    <h2>Ship</h2>
+    {% if levelup %}
+    <h3 style="color: #00802b">Level up</h3>
+    {% endif %}
+    <div class="row">
+        <div class="col-5">Name</div>
+        <div class="col">{{ ship.name }}</div>
+    </div>
+    <div class="row">
+        <div class="col-5">Life</div>
+        <div class="col">{{ ship.life }}</div>
+    </div>
+    <div class="row">
+        <div class="col-5">Level</div>
+        <div class="col">{{ ship.level }}</div>
+    </div>
+    <div class="row">
+        <div class="col-5">XP</div>
+        <div class="col">{{ ship.xp }}</div>
+    </div>
+</div>
+<div class="col">
+    {% if succes %}
+    <h2>Reward</h2>
+    <div class="row mh1">
+        <div class="col-1"><img src="{% static 'img/coin.png' %}" alt="Money" title="Money"/></div>
+        <div class="col-4"> Money</div>
+        <div class="col-3"> {{ activity.rewardGold }}</div>
+    </div>
+    <div class="row mh1">
+        <div class="col-1"><img src="{% static 'img/wood.png' %}" alt="Wood" title="Wood"/></div>
+        <div class="col-4"> Wood</div>
+        <div class="col-3"> {{ activity.rewardWood }}</div>
+    </div>
+    <div class="row mh1">
+        <div class="col-1"><img src="{% static 'img/iron.png' %}" alt="Iron" title="Iron"/></div>
+        <div class="col-4"> Iron</div>
+        <div class="col-3"> {{ activity.rewardIron }}</div>
+    </div>
+    {% endif %}
+</div>
+<div class="col">
+    <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'play' %}">Back to play page</a>
+</div>
+
+{% endblock %}

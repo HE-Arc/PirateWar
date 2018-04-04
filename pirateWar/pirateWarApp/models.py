@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 
 # Create your models here.
@@ -35,3 +36,5 @@ class Ship(models.Model):
     cannon = models.IntegerField(default=0)
     life = models.IntegerField(default=100)
     currentActivity = models.ForeignKey(Activity, on_delete=models.CASCADE, null=True)
+    endActivity = models.DateTimeField(null=True)
+    xp = models.IntegerField(default=0)

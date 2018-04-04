@@ -158,7 +158,6 @@ class ShipCreateView(generic.CreateView):
             Ship.objects.create(player=player, name=name)
             player.wood = player.wood - 10
             player.save()
-
         else:
             messages.add_message(request, messages.ERROR, 'Not enough wood')
 
@@ -177,6 +176,11 @@ class ShipUpdateView(UserPassesTestMixin, generic.UpdateView):
         if not cond:
             messages.add_message(self.request, messages.ERROR, 'Wrong user')
         return cond
+
+    def get_context_data(self, **kwargs):
+        context = super(ShipUpdateView, self).get_context_data(**kwargs)
+        context['player'] = self.object.player
+        return context
 
 
 class HomeView(TemplateView):

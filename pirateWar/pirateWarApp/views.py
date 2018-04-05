@@ -1,10 +1,13 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.forms import ModelForm
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import TemplateView
 from django.contrib import messages
+
+from pirateWarApp.forms import ShipUpdateForm
 from pirateWarApp.models import Ship, Player, User, Category, Activity
 from datetime import datetime
 import random
@@ -168,7 +171,49 @@ class ShipUpdateView(UserPassesTestMixin, generic.UpdateView):
     model = Ship
     success_url = reverse_lazy('play')
     template_name = 'edit_ship.html'
-    fields = ['name', 'crew', 'cannon', 'life']
+    # fields = ['name', 'crew', 'cannon', 'life']
+    form_class = ShipUpdateForm
+
+    def post(self, request, *args, **kwargs):
+        ship_to_update = Ship.objects.get(pk=self.get_object().pk)
+        player = ship_to_update.player
+
+        old_crew = ship_to_update.crew
+        old_cannon = ship_to_update.cannon
+        old_life = ship_to_update.life
+
+        form = ShipUpdateForm(request.POST, instance=ship_to_update)
+
+        if form.is_valid():
+            new_crew = form.cleaned_data['crew']
+            new_cannon = form.cleaned_data['cannon']
+            new_life = form.cleaned_data['life']
+
+            cond_crew = player.crew + (old_crew - new_crew) >= 0
+            cond_cannon = player.cannons + (old_cannon - new_cannon) >= 0
+            cond_wood = player.wood + (old_life - new_life) >= 0
+
+            if not cond_crew:
+                # form.fields['crew'].error_messages['max_value'] = 'Not enough crew available'
+                messages.add_message(self.request, messages.ERROR, 'Not enough crew available')
+            if not cond_wood:
+                # form.fields['life'].error_messages['max_value'] = 'Not enough wood available'
+                messages.add_message(self.request, messages.ERROR, 'Not enough wood available')
+            if not cond_cannon:
+                # form.fields['cannon'].error_messages['max_value'] = 'Not enough cannon available'
+                messages.add_message(self.request, messages.ERROR, 'Not enough cannon available')
+
+            if cond_crew and cond_cannon and cond_wood:
+                player.crew = player.crew + (old_crew - new_crew)
+                player.wood = player.wood + (old_life - new_life)
+                player.cannons = player.cannons + (old_cannon - new_cannon)
+                player.save()
+                form.save()
+                return HttpResponseRedirect(self.get_success_url())
+
+        context = self.get_context_data()
+        context['form'] = form
+        return render(request, self.template_name, context)
 
     def test_func(self):
         self.object = self.get_object()

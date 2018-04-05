@@ -3,9 +3,12 @@ lock "~> 3.10.1"
 
 set :application, "PirateWar"
 set :repo_url, "https://github.com/HE-Arc/PirateWar.git"
+set :branch, ENV['BRANCH'] if ENV['BRANCH']
 
 after 'deploy:updating', 'python:create_venv'
 after 'deploy:publishing', 'uwsgi:restart'
+
+prefix = 'source ~/.bash_profile;'
 
 namespace :python do
 
@@ -19,7 +22,7 @@ namespace :python do
             execute "python3.6 -m venv #{venv_path}"
             execute "source #{venv_path}/bin/activate"
             execute "#{venv_path}/bin/pip install -r #{release_path}/requirements.txt"
-            execute "python3.6 #{release_path}/pirateWar/manage.py migrate"
+            execute "source #{venv_path}/bin/activate; source ~/.bash_profile; python3.6 #{release_path}/pirateWar/manage.py migrate"
         end
     end
 end
@@ -32,7 +35,6 @@ namespace :uwsgi do
         end
     end
 end
-
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 

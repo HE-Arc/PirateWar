@@ -7,4 +7,4 @@ isort
 Django
 django-bootstrap4
 django-registration
-
+mysqlclient

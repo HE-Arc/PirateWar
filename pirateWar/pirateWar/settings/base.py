@@ -11,22 +11,21 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-env = os.getenv
+env = os.environ.get
+from django.utils import translation
+
+import platform
+
+if platform.node() == "piratewars":
+    from .production import *
+else:
+    from .local import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('DJANGO_SECRET_KEY',
-                 default='_a#^@e+%s*007_@(0nf+hl4wn%#6y(d&lhb=23)y@=3cz#218(')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['piratewars.srvz-webapp.he-arc.ch', '127.0.0.1']
 
 # Application definition
 
@@ -71,16 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pirateWar.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -104,7 +93,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Paris'
 
 USE_I18N = True
 

@@ -6,3 +6,8 @@ install:
     - chmod 777 test.sh
 
 script: ./test.sh
+
+notifications:
+  email:
+    on_failure: never
+    on_pull_requests: never

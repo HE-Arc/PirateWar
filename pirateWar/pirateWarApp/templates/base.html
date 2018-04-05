@@ -9,15 +9,13 @@
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
 
-    {# Display django.contrib.messages as Bootstrap alerts #}
-    {% bootstrap_messages %}
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Oldenburg" rel="stylesheet">
     <title>
         {% block title %}
-        PirateWar
+            PirateWar
         {% endblock %}
     </title>
 </head>
@@ -28,9 +26,9 @@
             <h1>PirateWar</h1>
         </a>
         {% if user.is_authenticated %}
-        <h2>
-            <span class="badge badge-secondary">{{user.username}}</span>
-        </h2>
+            <h2>
+                <span class="badge badge-secondary">{{ user.username }}</span>
+            </h2>
         {% endif %}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,26 +40,31 @@
             </ul>
             <ul class="navbar-nav my-2 my-lg-0">
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'logout' %}">Logout</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'logout' %}">Logout</a>
+                    </li>
                 {% else %}
-                <li class="nav-item">
-                    <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'login' %}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'register' %}">Register</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-dark" style="background-color: #00802b"
+                           href="{% url 'register' %}">Register</a>
+                    </li>
                 {% endif %}
             </ul>
         </div>
     </div>
 </nav>
 
+<div id="alert">
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+</div>
 
 <div class="container">
     {% block content %}
-    <p>Default</p>
+        <p>Default</p>
     {% endblock %}
 </div>
 

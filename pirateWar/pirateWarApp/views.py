@@ -237,3 +237,33 @@ class HomeView(TemplateView):
         if logged:
             username = request.user.username
         return render(request, self.template_name, {'logged': logged, 'username': username})
+
+
+class BuyCannonView(generic.TemplateView):
+    template_name = 'play.html'
+
+    def post(self, request, *args, **kwargs):
+        player = PlayView.get_player(request.user)
+        if player.iron >= 10:
+            player.cannons += 1
+            player.iron -= 10
+            player.save()
+            return redirect('play')
+
+        messages.add_message(self.request, messages.ERROR, 'Not enough iron')
+        return redirect('play')
+
+
+class RecruitCrewManView(generic.TemplateView):
+    template_name = 'play.html'
+
+    def post(self, request, *args, **kwargs):
+        player = PlayView.get_player(request.user)
+        if player.money >= 10:
+            player.crew += 1
+            player.money -= 10
+            player.save()
+            return redirect('play')
+
+        messages.add_message(self.request, messages.ERROR, 'Not enough money')
+        return redirect('play')

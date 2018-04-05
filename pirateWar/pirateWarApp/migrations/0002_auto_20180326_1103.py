@@ -18,7 +18,7 @@ def create_activities(apps, schema_editor):
         for l in range(1, 4):
             activity = Activity(category=Category.objects.get(pk=i), rewardGold=l * 10, rewardWood=l * 10,
                                 rewardIron=l * 10, level=l,
-                                duration=datetime.timedelta(minutes=0))
+                                duration=datetime.timedelta(seconds=i*10))
             activity.save()
 
 

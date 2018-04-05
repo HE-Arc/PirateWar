@@ -88,10 +88,10 @@ class AddActivityView(generic.TemplateView):
     template_name = 'play.html'
     model = Ship
 
-    def get(self, request, pk, pk2, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         user = request.user
-        activity = Activity.objects.get(pk=pk)
-        ship = Ship.objects.get(pk=pk2)
+        activity = Activity.objects.get(pk=request.POST.get('activitypk'))
+        ship = Ship.objects.get(pk=request.POST.get('shippk'))
         if ship.player.user == user:
             ship.currentActivity = activity
             ship.endActivity = datetime.utcnow() + activity.duration
@@ -104,10 +104,10 @@ class AddActivityView(generic.TemplateView):
 class ResultView(generic.TemplateView):
     template_name = 'result.html'
 
-    def get(self, request, pk, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         user = request.user
         player = PlayView.get_player(user=user)
-        ship = Ship.objects.get(pk=pk)
+        ship = Ship.objects.get(pk=request.POST.get('shippk'))
         activity = ship.currentActivity
         if user != ship.player.user:
             messages.add_message(self.request, messages.ERROR, 'Wrong user')

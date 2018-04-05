@@ -7,12 +7,18 @@
 <div class="col">
     <h2>Ships ({{ nbships }})</h2>
     {% for ship in ships %}
-    <div class="row mh1">
-        <div class="col-2"><img src="{% static 'img/1stship_3.png' %}" alt="Ship" title="Ship" height="30"/>
+    <form method="post" action="{% url 'add-activity' %}">
+        {% csrf_token %}
+        <div class="row mh1">
+            <div class="col-2"><img src="{% static 'img/1stship_3.png' %}" alt="Ship" title="Ship" height="30"/>
+            </div>
+            <div class="col-4">{{ ship.name }}</div>
+            <input id="activitypk" name="activitypk" type="hidden" value="{{ pkactivity }}">
+            <input id="shippk" name="shippk" type="hidden" value="{{ ship.pk }}">
+            <div class="col-2"><input type="submit" class="btn btn-dark btn-sm"
+                                      style="background-color: #00802b" value="Select"></div>
         </div>
-        <div class="col-4">{{ ship.name }}</div>
-        <div class="col"><a class="" href="{% url 'add-activity' pk=pkactivity pk2=ship.pk %}">Select</a></div>
-    </div>
+    </form>
     {% endfor %}
     <div class="col">
         <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'play' %}">Cancel</a>

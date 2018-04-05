@@ -28,10 +28,10 @@ from registration.views import RegistrationView
 urlpatterns = [
     path('', login_required(HomeView.as_view()), name='home'),
     path('about/', AboutView.as_view(), name='about'),
-    path('play/result/<int:pk>', login_required(ResultView.as_view()), name='result'),
+    path('play/result', login_required(ResultView.as_view()), name='result'),
     path('play/activity', login_required(ActivityListView.as_view()), name='select-activity'),
     path('play/activity/<int:pk>/selectship', login_required(SelectShipView.as_view()), name='select-ship'),
-    path('play/activity/<int:pk>/selectship/<int:pk2>/addactivity', login_required(AddActivityView.as_view()),
+    path('play/activity/addactivity', login_required(AddActivityView.as_view()),
          name='add-activity'),
     path('play/', login_required(PlayView.as_view()), name='play'),
     path('play/ship/<int:pk>/delete',

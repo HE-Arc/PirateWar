@@ -28,3 +28,197 @@ body {
     right: 10px;
     width: 300px;
 }
+
+.ship, .ship_animate{
+    height: 35vh;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    opacity: 1;
+}
+
+.ship{
+    -webkit-animation: park_boat  0.5s linear;
+    animation: park_boat  0.5s linear;
+}
+
+@keyframes park_boat{
+    from{
+        left: -24vw;
+    }
+    to{
+        left: 0vw;
+    }
+}
+
+.ship_animate {
+    left: -24vw;
+    -webkit-animation: boatMove  16s linear infinite;
+    animation: boatMove  16s linear infinite;
+}
+
+@keyframes boatMove {
+    from {
+        transform: translateX(0vw);
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+        transform: translateX(10vw);
+    }
+    45%{
+        opacity: 1;
+    }
+    49%{
+        transform: translateX(109vw);
+        opacity: 0;
+    }
+    50%{
+        transform: translateX(110vw) scaleX(-1);
+        opacity: 0;
+    }
+    55% {
+        opacity: 1;
+    }
+    95% {
+        opacity: 1;
+        transform: translateX(10vw) scaleX(-1);
+    }
+    to {
+        transform: translateX(0vw) scaleX(-1);
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes boatMove {
+    from {
+        transform: translateX(0vw);
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+        transform: translateX(10vw);
+    }
+    45%{
+        opacity: 1;
+    }
+    49%{
+        transform: translateX(99vw);
+        opacity: 0;
+    }
+    50%{
+        transform: translateX(99vw) scaleX(-1);
+        opacity: 0;
+    }
+    55% {
+        opacity: 1;
+    }
+    95% {
+        opacity: 1;
+        transform: translateX(10vw) scaleX(-1);
+    }
+    to {
+        transform: translateX(0vw) scaleX(-1);
+        opacity: 0;
+    }
+}
+
+@-o-keyframes boatMove {
+    from {
+        transform: translateX(0vw);
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+        transform: translateX(10vw);
+    }
+    45%{
+        opacity: 1;
+    }
+    49%{
+        transform: translateX(99vw);
+        opacity: 0;
+    }
+    50%{
+        transform: translateX(99vw) scaleX(-1);
+        opacity: 0;
+    }
+    55% {
+        opacity: 1;
+    }
+    95% {
+        opacity: 1;
+        transform: translateX(10vw) scaleX(-1);
+    }
+    to {
+        transform: translateX(0vw) scaleX(-1);
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes boatMove {
+    from {
+        transform: translateX(0vw);
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+        transform: translateX(10vw);
+    }
+    45%{
+        opacity: 1;
+    }
+    49%{
+        transform: translateX(99vw);
+        opacity: 0;
+    }
+    50%{
+        transform: translateX(99vw) scaleX(-1);
+        opacity: 0;
+    }
+    55% {
+        opacity: 1;
+    }
+    95% {
+        opacity: 1;
+        transform: translateX(10vw) scaleX(-1);
+    }
+    to {
+        transform: translateX(0vw) scaleX(-1);
+        opacity: 0;
+    }
+}
+
+@-ms-keyframes boatMove {
+    from {
+        transform: translateX(0vw);
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+        transform: translateX(10vw);
+    }
+    45%{
+        opacity: 1;
+    }
+    49%{
+        transform: translateX(99vw);
+        opacity: 0;
+    }
+    50%{
+        transform: translateX(99vw) scaleX(-1);
+        opacity: 0;
+    }
+    55% {
+        opacity: 1;
+    }
+    95% {
+        opacity: 1;
+        transform: translateX(10vw) scaleX(-1);
+    }
+    to {
+        transform: translateX(0vw) scaleX(-1);
+        opacity: 0;
+    }
+}

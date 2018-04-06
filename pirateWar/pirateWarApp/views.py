@@ -10,6 +10,7 @@ from django.contrib import messages
 from pirateWarApp.forms import ShipUpdateForm
 from pirateWarApp.models import Ship, Player, User, Category, Activity
 from datetime import datetime
+from django.utils.timezone import utc
 import random
 import math
 
@@ -25,7 +26,8 @@ class ProfileView(generic.TemplateView):
     def get(self, request, *args, **kwargs):
         user = request.user
         if Player.objects.filter(user=user).count() < 1:
-            Player.objects.create(user=user, money=10, wood=10, iron=10, crew=3, cannons=1)
+            Player.objects.create(user=user, money=10,
+                                  wood=10, iron=10, crew=3, cannons=1)
         player = Player.objects.filter(user=user).first()
         return render(request, self.template_name, {'player': player})
 
@@ -37,14 +39,16 @@ class PlayView(generic.TemplateView):
     def get_player(user):
         """Return the player associated with the user or create one if it doesn't exist."""
         if Player.objects.filter(user=user).count() < 1:
-            Player.objects.create(user=user, money=10, wood=10, iron=10, crew=3, cannons=1)
+            Player.objects.create(user=user, money=10,
+                                  wood=10, iron=10, crew=3, cannons=1)
         return Player.objects.filter(user=user).first()
 
     def get(self, request, *args, **kwargs):
         user = request.user
         player = self.get_player(user)
         ships = Ship.objects.filter(player=player, currentActivity=None).all()
-        ships_activity = Ship.objects.filter(player=player).exclude(currentActivity=None).all()
+        ships_activity = Ship.objects.filter(
+            player=player).exclude(currentActivity=None).all()
         nbships = len(ships)
         return render(request, self.template_name,
                       {'player': player, 'nbships': nbships, 'ships': ships, 'ships_activity': ships_activity})
@@ -81,7 +85,8 @@ class SelectShipView(generic.ListView):
         ships = Ship.objects.filter(player=player, currentActivity=None).all()
         nbships = len(ships)
         if nbships == 0:
-            messages.add_message(self.request, messages.ERROR, 'No ship available')
+            messages.add_message(
+                self.request, messages.ERROR, 'No ship available')
         pkactivity = pk
         return render(request, self.template_name,
                       {'nbships': nbships, 'ships': ships, 'pkactivity': pkactivity})
@@ -97,7 +102,7 @@ class AddActivityView(generic.TemplateView):
         ship = Ship.objects.get(pk=request.POST.get('shippk'))
         if ship.player.user == user:
             ship.currentActivity = activity
-            ship.endActivity = datetime.utcnow() + activity.duration
+            ship.endActivity = datetime.utcnow().replace(tzinfo=utc) + activity.duration
             ship.save()
         else:
             messages.add_message(self.request, messages.ERROR, 'Wrong user')
@@ -120,7 +125,8 @@ class ResultView(generic.TemplateView):
         else:
             deltaLevel = ship.level - activity.level
             dict = {'Shipping': 1, 'Defense': 1.2, 'Attack': 1.5}
-            damage = 100 - (4 * ship.cannon + 2 * ship.crew + deltaLevel * 10 + random.randint(-20, 20))
+            damage = 100 - (4 * ship.cannon + 2 * ship.crew +
+                            deltaLevel * 10 + random.randint(-20, 20))
             if damage < 0:
                 damage = 0
             damage = damage * dict[activity.category.name]
@@ -194,13 +200,16 @@ class ShipUpdateView(UserPassesTestMixin, generic.UpdateView):
 
             if not cond_crew:
                 # form.fields['crew'].error_messages['max_value'] = 'Not enough crew available'
-                messages.add_message(self.request, messages.ERROR, 'Not enough crew available')
+                messages.add_message(
+                    self.request, messages.ERROR, 'Not enough crew available')
             if not cond_wood:
                 # form.fields['life'].error_messages['max_value'] = 'Not enough wood available'
-                messages.add_message(self.request, messages.ERROR, 'Not enough wood available')
+                messages.add_message(
+                    self.request, messages.ERROR, 'Not enough wood available')
             if not cond_cannon:
                 # form.fields['cannon'].error_messages['max_value'] = 'Not enough cannon available'
-                messages.add_message(self.request, messages.ERROR, 'Not enough cannon available')
+                messages.add_message(
+                    self.request, messages.ERROR, 'Not enough cannon available')
 
             if cond_crew and cond_cannon and cond_wood:
                 player.crew = player.crew + (old_crew - new_crew)

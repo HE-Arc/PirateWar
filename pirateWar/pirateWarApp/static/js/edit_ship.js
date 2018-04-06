@@ -19,7 +19,6 @@ document.getElementById('id_life').min = 0;
 
 function compute(default_player_resource_value, default_resource_value, current_value, factor, player_resource_element, input_id, resource_name) {
     try {
-        //console.log(default_player_resource_value, default_resource_value, current_value, factor);
         if (default_player_resource_value + (default_resource_value - current_value) * factor >= 0) {
             default_player_resource_value += (default_resource_value - current_value) * factor;
             player_resource_element.innerText = '' + default_player_resource_value;
@@ -27,6 +26,7 @@ function compute(default_player_resource_value, default_resource_value, current_
         else {
             alert("Not enough resource");
             document.getElementById(input_id).value = default_resource_value;
+            player_resource_element.innerText = '' + default_player_resource_value;
         }
     }
     catch (err) {

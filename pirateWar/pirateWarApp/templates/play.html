@@ -11,28 +11,43 @@
                 <h2>Resources</h2>
             </div>
             <div class="row mh1">
-                <div class="col-1"><img src="{% static 'img/coin.png' %}" alt="Money" title="Money"/></div>
+                <div class="col-1"
+                     data-toggle="tooltip" data-placement="left"
+                     title="Recruit crew">
+                    <img src="{% static 'img/coin.png' %}"/>
+                </div>
                 <div class="col-4"> Money</div>
                 <div class="col-3"> {{ player.money }}</div>
             </div>
             <div class="row mh1">
-                <div class="col-1"><img src="{% static 'img/sword_little.png' %}" alt="Crew" title="Crew" height="30"/>
+                <div class="col-1"
+                     data-toggle="tooltip" data-placement="left"
+                     title="Add crew to your ships">
+                    <img src="{% static 'img/sword_little.png' %}" height="30"/>
                 </div>
                 <div class="col-4"> Crew</div>
                 <div class="col-3"> {{ player.crew }}</div>
             </div>
             <div class="row mh1">
-                <div class="col-1"><img src="{% static 'img/wood.png' %}" alt="Wood" title="Wood"/></div>
+                <div class="col-1"
+                     data-toggle="tooltip" data-placement="left"
+                     title="Buy, repair and upgrade ships">
+                    <img src="{% static 'img/wood.png' %}"/></div>
                 <div class="col-4"> Wood</div>
                 <div class="col-3"> {{ player.wood }}</div>
             </div>
             <div class="row mh1">
-                <div class="col-1"><img src="{% static 'img/iron.png' %}" alt="Iron" title="Iron"/></div>
+                <div class="col-1"
+                     data-toggle="tooltip" data-placement="left"
+                     title="Build new cannons">
+                    <img src="{% static 'img/iron.png' %}"/></div>
                 <div class="col-4"> Iron</div>
                 <div class="col-3"> {{ player.iron }}</div>
             </div>
-            <div class="row mh1">
-                <div class="col-1"><img src="{% static 'img/cannon.png' %}" alt="Cannons" title="Cannons" height="30"/>
+            <div class="row mh1"
+                 data-toggle="tooltip" data-placement="left"
+                 title="Add cannons to your ships">
+                <div class="col-1"><img src="{% static 'img/cannon.png' %}" height="30"/>
                 </div>
                 <div class="col-4"> Cannons</div>
                 <div class="col-3"> {{ player.cannons }}</div>
@@ -47,11 +62,13 @@
                     {% csrf_token %}
                     <label for="btn-buy-ship">Buy a new ship (10 wood)</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Ship name"
+                        <input required type="text" class="form-control" placeholder="Ship name"
                                aria-label="Input group example" aria-describedby="btnGroupAddon" id="shipname"
                                name="shipname">
                         <div class="input-group-append">
-                            <input id='btn-buy-ship' type="submit" class="btn btn-primary" value="Buy ship">
+                            <input id='btn-buy-ship' type="submit" class="btn btn-primary"
+                                   data-toggle="tooltip" data-placement="right" title="Cost : 10 wood"
+                                   value="Buy ship">
                         </div>
                     </div>
                 </form>
@@ -61,7 +78,8 @@
                 <form class="form-group" method="post" action="{% url 'build-cannon' %}">
                     {% csrf_token %}
                     <input id='btn-buy-cannon' type="submit" class="btn btn-primary"
-                           value="Build a new cannon (10 iron)">
+                           data-toggle="tooltip" data-placement="right" title="Cost : 10 iron"
+                           value="Build a new cannon">
                 </form>
             </div>
 
@@ -69,7 +87,8 @@
                 <form class="form-group" method="post" action="{% url 'recruit' %}">
                     {% csrf_token %}
                     <input id='btn-buy-cannon' type="submit" class="btn btn-primary"
-                           value="Recruit a new crewman (10 gold)">
+                           data-toggle="tooltip" data-placement="right" title="Cost : 10 gold"
+                           value="Recruit a new crewman">
                 </form>
             </div>
 
@@ -81,13 +100,19 @@
                     <div class="col-2"><img src="{% static 'img/1stship_3.png' %}" alt="Ship" title="Ship" height="30"/>
                     </div>
                     <div class="col-6">{{ ship.name }}</div>
-                    <div class="col-1"><a href="{% url 'edit-ship' ship.pk %}"><img src="{% static 'img/hammer.png' %}"
-                                                                                    alt="Edit" title="Edit"
-                                                                                    height="25"/></a></div>
-                    <div class="col-1"><a href="{% url 'delete-ship' ship.pk %}"><img
-                            src="{% static 'img/delete.png' %}"
-                            alt="Delete" title="Delete"
-                            height="25"/></a></div>
+                    <div class="col-1">
+                        <a href="{% url 'edit-ship' ship.pk %}"
+                           data-toggle="tooltip" data-placement="bottom"
+                           title="Add crew and cannons to your ship!">
+                            <img src="{% static 'img/hammer.png' %}" height="25"/></a>
+                    </div>
+                    <div class="col-1">
+                        <a href="{% url 'delete-ship' ship.pk %}"
+                           data-toggle="tooltip" data-placement="bottom"
+                           title="Delete this ship">
+                            <img src="{% static 'img/delete.png' %}"
+                                 height="25"/></a>
+                    </div>
                 </div>
             {% endfor %}
 
@@ -107,15 +132,16 @@
                         <input id="shippk" name="shippk" type="hidden" value="{{ ship.pk }}">
                         <div class="col-2"><input type="submit" class="btn btn-dark btn-sm result"
                                                   style="display: none; background-color: #00802b" value="Result"></div>
-
                         <p hidden class="timestamp">{{ ship.endActivity.timestamp }}</p>
                     </div>
                 </form>
             {% endfor %}
             <div class="row">
                 <div class="col-12">
-                    <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'select-activity' %}">Select
-                        activity</a>
+                    <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'select-activity' %}"
+                       data-toggle="tooltip" data-placement="bottom"
+                       title="Send a ship to a new quest!">Select activity
+                    </a>
                 </div>
             </div>
         </div>

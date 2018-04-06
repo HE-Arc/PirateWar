@@ -171,7 +171,6 @@ class ShipUpdateView(UserPassesTestMixin, generic.UpdateView):
     model = Ship
     success_url = reverse_lazy('play')
     template_name = 'edit_ship.html'
-    # fields = ['name', 'crew', 'cannon', 'life']
     form_class = ShipUpdateForm
 
     def post(self, request, *args, **kwargs):
@@ -244,6 +243,7 @@ class BuyCannonView(generic.TemplateView):
 
     def post(self, request, *args, **kwargs):
         player = PlayView.get_player(request.user)
+        player = Player.objects.select_for_update().get(pk=player.pk)
         if player.iron >= 10:
             player.cannons += 1
             player.iron -= 10

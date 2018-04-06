@@ -147,33 +147,6 @@
         </div>
     </div>
 
-    <script>
-        function updateTime() {
-            var timeTab = document.getElementsByClassName('time');
-            var timestampTab = document.getElementsByClassName('timestamp');
-            var tabResult = document.getElementsByClassName("result");
-            var n2 = Date.now();
-            for (var i = 0; i < timeTab.length; i++) {
-                var delta = timestampTab[i].innerHTML - n2 / 1000;
-                if (delta <= 0) {
-                    timeTab[i].innerHTML = 'Finished';
-                    tabResult[i].style.display = "block";
-                }
-                else {
-                    delta = Math.ceil(delta);
-                    var hour = Math.floor(delta / 3600);
-                    delta -= 3600 * hour;
-                    var minute = Math.floor(delta / 60);
-                    delta -= 60 * minute;
-                    timeTab[i].innerHTML = hour + ":" + minute + ":" + delta;
-                }
-            }
-        }
-
-        updateTime();
-        setInterval(updateTime, 1000);
-
-
-    </script>
+    <script src="{% static 'js/play.js' %}"></script>
 
 {% endblock %}

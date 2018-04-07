@@ -121,36 +121,36 @@ class ResultView(generic.TemplateView):
             return redirect('home')
         if activity is None or ship.endActivity.timestamp() > datetime.now().timestamp():
             return redirect('home')
+
+        delta_level = ship.level - activity.level
+        factor_by_type = {'Shipping': 1, 'Defense': 1.2, 'Attack': 1.5}
+        damage = 100 - (4 * ship.cannon + 2 * ship.crew +
+                        delta_level * 10 + random.randint(-20, 20))
+        if damage < 0:
+            damage = 0
+        damage = damage * factor_by_type[activity.category.name]
+        life = math.ceil(ship.life - damage)
+        level_up = False
+        if life <= 0:
+            life = 0
+            ship.life = 0
+            ship.delete()
         else:
-            delta_level = ship.level - activity.level
-            factor_by_type = {'Shipping': 1, 'Defense': 1.2, 'Attack': 1.5}
-            damage = 100 - (4 * ship.cannon + 2 * ship.crew +
-                            delta_level * 10 + random.randint(-20, 20))
-            if damage < 0:
-                damage = 0
-            damage = damage * factor_by_type[activity.category.name]
-            life = math.ceil(ship.life - damage)
-            level_up = False
-            if life <= 0:
-                life = 0
-                ship.life = 0
-                ship.delete()
-            else:
-                player.money = player.money + activity.rewardGold
-                player.wood = player.wood + activity.rewardWood
-                player.iron = player.iron + activity.rewardIron
-                player.save()
-                ship.xp = ship.xp + activity.level * 10
-                if ship.xp >= 100 and ship.level < 10:
-                    level_up = True
-                    ship.xp = 0
-                    ship.level = ship.level + 1
-                ship.life = life
-                ship.currentActivity = None
-                ship.endActivity = None
-                ship.save()
-            return render(request, self.template_name,
-                          {'ship': ship, 'activity': activity, 'succes': life > 0, 'levelup': level_up})
+            player.money = player.money + activity.rewardGold
+            player.wood = player.wood + activity.rewardWood
+            player.iron = player.iron + activity.rewardIron
+            player.save()
+            ship.xp = ship.xp + activity.level * 10
+            if ship.xp >= 100 and ship.level < 10:
+                level_up = True
+                ship.xp = 0
+                ship.level = ship.level + 1
+            ship.life = life
+            ship.currentActivity = None
+            ship.endActivity = None
+            ship.save()
+        return render(request, self.template_name,
+                      {'ship': ship, 'activity': activity, 'succes': life > 0, 'levelup': level_up})
 
 
 class ShipCreateView(generic.CreateView):

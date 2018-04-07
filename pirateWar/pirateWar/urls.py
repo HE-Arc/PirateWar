@@ -18,28 +18,28 @@ from django.contrib.auth.decorators import login_required
 from django.urls import include, path
 from django.contrib.auth import views as auth_views
 
-from pirateWarApp.views import HomeView, AboutView, PlayView, ShipDeleteView, ShipCreateView, ShipUpdateView, \
+from pirateWarApp.views import AboutView, PlayView, ShipDeleteView, ShipCreateView, ShipUpdateView, \
     ProfileView, ActivityListView, SelectShipView, AddActivityView, ResultView, BuyCannonView, RecruitCrewManView
 
 from registration.views import RegistrationView
 
 urlpatterns = [
-    path('', login_required(HomeView.as_view()), name='home'),
+    path('', login_required(PlayView.as_view()), name='home'),
     path('about/', AboutView.as_view(), name='about'),
-    path('play/result', login_required(ResultView.as_view()), name='result'),
-    path('play/activity', login_required(ActivityListView.as_view()), name='select-activity'),
-    path('play/activity/<int:pk>/selectship', login_required(SelectShipView.as_view()), name='select-ship'),
-    path('play/activity/addactivity', login_required(AddActivityView.as_view()),
+    path('result', login_required(ResultView.as_view()), name='result'),
+    path('activity', login_required(ActivityListView.as_view()), name='select-activity'),
+    path('activity/<int:pk>/selectship', login_required(SelectShipView.as_view()), name='select-ship'),
+    path('activity/addactivity', login_required(AddActivityView.as_view()),
          name='add-activity'),
-    path('play/', login_required(PlayView.as_view()), name='play'),
-    path('play/ship/<int:pk>/delete',
+    # path('play/', login_required(PlayView.as_view()), name='play'),
+    path('ship/<int:pk>/delete',
          login_required(ShipDeleteView.as_view()), name='delete-ship'),
-    path('play/ship/create',
+    path('ship/create',
          login_required(ShipCreateView.as_view()), name='create-ship'),
-    path('play/ship/<int:pk>/edit',
+    path('ship/<int:pk>/edit',
          login_required(ShipUpdateView.as_view()), name='edit-ship'),
-    path('play/player/build-cannon', login_required(BuyCannonView.as_view()), name='build-cannon'),
-    path('play/player/recruit-crewman', login_required(RecruitCrewManView.as_view()), name='recruit'),
+    path('player/build-cannon', login_required(BuyCannonView.as_view()), name='build-cannon'),
+    path('player/recruit-crewman', login_required(RecruitCrewManView.as_view()), name='recruit'),
     path('admin/', admin.site.urls, name='admin'),
     path('accounts/', include('registration.backends.simple.urls')),
     path('accounts/profile/', login_required(ProfileView.as_view()), name='profile'),

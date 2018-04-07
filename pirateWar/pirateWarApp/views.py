@@ -33,7 +33,7 @@ class ProfileView(generic.TemplateView):
 
 
 class PlayView(generic.TemplateView):
-    template_name = 'play.html'
+    template_name = 'home.html'
 
     @staticmethod
     def get_player(user):
@@ -56,7 +56,7 @@ class PlayView(generic.TemplateView):
 
 class ShipDeleteView(UserPassesTestMixin, generic.DeleteView):
     model = Ship
-    success_url = reverse_lazy('play')
+    success_url = reverse_lazy('home')
     template_name = 'ship_confirm_delete.html'
 
     def test_func(self):
@@ -93,7 +93,6 @@ class SelectShipView(generic.ListView):
 
 
 class AddActivityView(generic.TemplateView):
-    template_name = 'play.html'
     model = Ship
 
     def post(self, request, *args, **kwargs):
@@ -106,7 +105,7 @@ class AddActivityView(generic.TemplateView):
             ship.save()
         else:
             messages.add_message(self.request, messages.ERROR, 'Wrong user')
-        return redirect('play')
+        return redirect('home')
 
 
 class ResultView(generic.TemplateView):
@@ -119,9 +118,9 @@ class ResultView(generic.TemplateView):
         activity = ship.currentActivity
         if user != ship.player.user:
             messages.add_message(self.request, messages.ERROR, 'Wrong user')
-            return redirect('play')
+            return redirect('home')
         if activity == None or ship.endActivity.timestamp() > datetime.now().timestamp():
-            return redirect('play')
+            return redirect('home')
         else:
             deltaLevel = ship.level - activity.level
             dict = {'Shipping': 1, 'Defense': 1.2, 'Attack': 1.5}
@@ -155,7 +154,6 @@ class ResultView(generic.TemplateView):
 
 
 class ShipCreateView(generic.CreateView):
-    template_name = 'play.html'
     model = Ship
     fields = ['name']
 
@@ -170,12 +168,12 @@ class ShipCreateView(generic.CreateView):
         else:
             messages.add_message(request, messages.ERROR, 'Not enough wood')
 
-        return redirect('play')
+        return redirect('home')
 
 
 class ShipUpdateView(UserPassesTestMixin, generic.UpdateView):
     model = Ship
-    success_url = reverse_lazy('play')
+    success_url = reverse_lazy('home')
     template_name = 'edit_ship.html'
     form_class = ShipUpdateForm
 
@@ -236,20 +234,7 @@ class ShipUpdateView(UserPassesTestMixin, generic.UpdateView):
         return context
 
 
-class HomeView(TemplateView):
-    template_name = 'play.html'
-
-    def get(self, request, *args, **kwargs):
-        return redirect('play')
-        # logged = request.user.is_authenticated
-        # username = ''
-        # if logged:
-        #     username = request.user.username
-        # return render(request, self.template_name, {'logged': logged, 'username': username})
-
-
 class BuyCannonView(generic.TemplateView):
-    template_name = 'play.html'
 
     def post(self, request, *args, **kwargs):
         player = PlayView.get_player(request.user)
@@ -258,14 +243,13 @@ class BuyCannonView(generic.TemplateView):
             player.cannons += 1
             player.iron -= 10
             player.save()
-            return redirect('play')
+            return redirect('home')
 
         messages.add_message(self.request, messages.ERROR, 'Not enough iron')
-        return redirect('play')
+        return redirect('home')
 
 
 class RecruitCrewManView(generic.TemplateView):
-    template_name = 'play.html'
 
     def post(self, request, *args, **kwargs):
         player = PlayView.get_player(request.user)
@@ -274,7 +258,7 @@ class RecruitCrewManView(generic.TemplateView):
             player.crew += 1
             player.money -= 10
             player.save()
-            return redirect('play')
+            return redirect('home')
 
         messages.add_message(self.request, messages.ERROR, 'Not enough money')
-        return redirect('play')
+        return redirect('home')

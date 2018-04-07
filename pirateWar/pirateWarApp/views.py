@@ -268,6 +268,7 @@ class RecruitCrewManView(generic.TemplateView):
 
     def post(self, request, *args, **kwargs):
         player = PlayView.get_player(request.user)
+        player = Player.objects.select_for_update().get(pk=player.pk)
         if player.money >= 10:
             player.crew += 1
             player.money -= 10

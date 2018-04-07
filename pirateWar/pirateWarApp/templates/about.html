@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}About{% endblock %}
 
 {% block content %}
     <div class="row">
-        <div class="col">
+        <div class="col" {# style="background-color: white" #}>
             <h2 class="h2">How to play</h2>
             <h3 class="h5">Getting started</h3>
             <p>First, create an account.</p>
@@ -12,8 +13,31 @@
                 Then you can start a game. You have some resources to your disposition.
                 With your wood you can buy your first pirate ship! Give it name and build it.
             </p>
-            <h3 class="h5">Quests</h3>
-            <p></p>
+            <h3 class="h5">Quests (activities)</h3>
+            <p>
+                You can send your ship to some quest.
+                They will be unavailable for some time and then will bring you some resources.
+                You can choose a quest in the Select activity page.
+                Then you choose a ship to send to that quest.
+                And you wait until the ship return. The countdown is shown on home page.
+            </p>
+
+            <h3 class="h5">Resources</h3>
+            <p>
+                Resources are the core of this game.
+                The first type of resources : Gold, Iron and wood, can unlock the other type of resources : Crew,
+                Cannons and ships.
+            </p>
+            <p>So you can use</p>
+            <ul>
+                <li>Gold <img src="{% static 'img/coin.png' %}"/> to recruit crewman <img
+                        src="{% static 'img/sword_little.png' %}" height="30"/></li>
+                <li>Iron <img src="{% static 'img/iron.png' %}"/> to build cannons <img
+                        src="{% static 'img/cannon.png' %}" height="30"/></li>
+                <li>Wood <img src="{% static 'img/wood.png' %}"/> to build, repair or upgrade ships
+                    <img src="{% static 'img/1stship_3.png' %}" alt="Ship" title="Ship" height="30"/></li>
+            </ul>
+
         </div>
         <div class="col">
             <h2 class="h2">About</h2>
@@ -21,4 +45,5 @@
             <p>Authors: Sylvain Renaud, Maël Pedretti, Thibaut Piquerez</p>
         </div>
     </div>
+    <script src="{% static 'js/hide_ship.js' %}"></script>
 {% endblock %}

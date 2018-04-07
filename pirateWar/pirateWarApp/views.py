@@ -237,14 +237,15 @@ class ShipUpdateView(UserPassesTestMixin, generic.UpdateView):
 
 
 class HomeView(TemplateView):
-    template_name = 'home.html'
+    template_name = 'play.html'
 
     def get(self, request, *args, **kwargs):
-        logged = request.user.is_authenticated
-        username = ''
-        if logged:
-            username = request.user.username
-        return render(request, self.template_name, {'logged': logged, 'username': username})
+        return redirect('play')
+        # logged = request.user.is_authenticated
+        # username = ''
+        # if logged:
+        #     username = request.user.username
+        # return render(request, self.template_name, {'logged': logged, 'username': username})
 
 
 class BuyCannonView(generic.TemplateView):

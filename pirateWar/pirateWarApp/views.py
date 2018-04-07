@@ -119,18 +119,18 @@ class ResultView(generic.TemplateView):
         if user != ship.player.user:
             messages.add_message(self.request, messages.ERROR, 'Wrong user')
             return redirect('home')
-        if activity == None or ship.endActivity.timestamp() > datetime.now().timestamp():
+        if activity is None or ship.endActivity.timestamp() > datetime.now().timestamp():
             return redirect('home')
         else:
-            deltaLevel = ship.level - activity.level
-            dict = {'Shipping': 1, 'Defense': 1.2, 'Attack': 1.5}
+            delta_level = ship.level - activity.level
+            factor_by_type = {'Shipping': 1, 'Defense': 1.2, 'Attack': 1.5}
             damage = 100 - (4 * ship.cannon + 2 * ship.crew +
-                            deltaLevel * 10 + random.randint(-20, 20))
+                            delta_level * 10 + random.randint(-20, 20))
             if damage < 0:
                 damage = 0
-            damage = damage * dict[activity.category.name]
+            damage = damage * factor_by_type[activity.category.name]
             life = math.ceil(ship.life - damage)
-            levelUp = False
+            level_up = False
             if life <= 0:
                 life = 0
                 ship.life = 0
@@ -142,7 +142,7 @@ class ResultView(generic.TemplateView):
                 player.save()
                 ship.xp = ship.xp + activity.level * 10
                 if ship.xp >= 100 and ship.level < 10:
-                    levelUp = True
+                    level_up = True
                     ship.xp = 0
                     ship.level = ship.level + 1
                 ship.life = life
@@ -150,7 +150,7 @@ class ResultView(generic.TemplateView):
                 ship.endActivity = None
                 ship.save()
             return render(request, self.template_name,
-                          {'ship': ship, 'activity': activity, 'succes': life > 0, 'levelup': levelUp})
+                          {'ship': ship, 'activity': activity, 'succes': life > 0, 'levelup': level_up})
 
 
 class ShipCreateView(generic.CreateView):

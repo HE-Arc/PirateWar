@@ -5,7 +5,7 @@
 
 {% block content %}
 
-    <div class="row justify-content-md-center">
+    <div class="row justify-content-md-center mb-2">
         {% if succes %}
             <h1>Activity complete</h1>
         {% else %}
@@ -14,7 +14,7 @@
             </h1>
         {% endif %}
     </div>
-    <div class="row">
+    <div class="row  mb-2">
         <div class="col">
             <h2 class="h3">Ship</h2>
             {% if levelup %}
@@ -58,7 +58,7 @@
             {% endif %}
         </div>
     </div>
-    <div class="row justify-content-md-center">
-        <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'home' %}">Back to play page</a>
+    <div class="row justify-content-md-center mb-2">
+        <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'home' %}">Back to home page</a>
     </div>
 {% endblock %}

@@ -87,8 +87,8 @@ class PlayView(generic.TemplateView):
     def get_player(user):
         """Return the player associated with the user or create one if it doesn't exist."""
         if Player.objects.filter(user=user).count() < 1:
-            Player.objects.create(user=user, money=10,
-                                  wood=10, iron=10, crew=3, cannons=1)
+            Player.objects.create(user=user, money=100,
+                                  wood=100, iron=100, crew=5, cannons=2)
         return Player.objects.filter(user=user).first()
 
     def get(self, request, *args, **kwargs):
@@ -173,7 +173,7 @@ class ResultView(generic.TemplateView):
         if user != ship.player.user:
             messages.add_message(self.request, messages.ERROR, 'Wrong user')
             return redirect('home')
-        if activity is None or ship.endActivity.timestamp() > datetime.now().timestamp():
+        if activity is None or ship.endActivity.timestamp() > datetime.utcnow().replace(tzinfo=utc).timestamp():
             return redirect('home')
 
         delta_level = ship.level - activity.level

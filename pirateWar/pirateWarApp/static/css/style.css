@@ -34,7 +34,7 @@ nav, h1, h2, h3{
 }
 
 .ship, .ship_animate{
-    height: 35vh;
+    height: 25vh;
     position: fixed;
     bottom: 0;
     left: 0;

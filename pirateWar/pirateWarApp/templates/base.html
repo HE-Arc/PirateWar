@@ -15,23 +15,23 @@
     <link href="https://fonts.googleapis.com/css?family=Oldenburg" rel="stylesheet">
     <title>
         {% block title %}
-            PirateWar
+        PirateWar
         {% endblock %}
     </title>
 </head>
 <body onload="$(function () {$('[data-toggle=\'tooltip\']').tooltip()})">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5" style="font-family: Oldenburg;">
-    <div class="container">
-        <a class="navbar-brand text-danger" href="{% url 'home' %}">
-            <h1>PirateWar</h1>
-        </a>
-        {% if user.is_authenticated %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5" style="font-family: Oldenburg;">
+        <div class="container">
+            <a class="navbar-brand text-danger" href="{% url 'home' %}">
+                <h1>Pirate War</h1>
+            </a>
+            {% if user.is_authenticated %}
             <h2>
                 <span class="badge badge-secondary">{{ user.username }}</span>
             </h2>
-        {% endif %}
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            {% endif %}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -39,23 +39,23 @@
             <ul class="navbar-nav mr-auto">
             </ul>
             <ul class="navbar-nav my-2 my-lg-0">
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'logout' %}">Logout</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'login' %}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-dark" style="background-color: #00802b"
-                           href="{% url 'register' %}">Register</a>
-                    </li>
-                {% endif %}
                 <li class="nav-item">
                     <a class="btn btn-dark" style="background-color: #00802b"
-                       href="{% url 'about' %}">About</a>
+                    href="{% url 'about' %}">About</a>
                 </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-dark" style="background-color: #00802b"
+                    href="{% url 'register' %}">Register</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -69,7 +69,7 @@
 <div class="container" id="container">
     <img src="{% static 'img/1stship_3.png' %}" alt="ship" id="ship" class="ship"/>
     {% block content %}
-        <p>Default</p>
+    <p>Default</p>
     {% endblock %}
 </div>
 

@@ -50,8 +50,9 @@ class PlayView(generic.TemplateView):
         ships_activity = Ship.objects.filter(
             player=player).exclude(currentActivity=None).all()
         nbships = len(ships)
+        users = User.objects.all()
         return render(request, self.template_name,
-                      {'player': player, 'nbships': nbships, 'ships': ships, 'ships_activity': ships_activity})
+                      {'player': player, 'nbships': nbships, 'ships': ships, 'ships_activity': ships_activity, 'users': users})
 
 
 class ShipDeleteView(UserPassesTestMixin, generic.DeleteView):
@@ -71,8 +72,13 @@ class ActivityListView(generic.ListView):
     model = Activity
     template_name = "activity.html"
 
-    def get_queryset(self):
-        return self.model.objects.order_by('level')
+    def get(self, request, *args, **kwargs):
+        if "fight" in request.path:
+            activities = self.model.objects.filter(
+                category__name__contains="Attack").order_by('level')
+        else:
+            activities = self.model.objects.order_by('level')
+        return render(request, self.template_name, {'activities': activities})
 
 
 class SelectShipView(generic.ListView):

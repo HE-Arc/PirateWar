@@ -16,9 +16,9 @@ def create_activities(apps, schema_editor):
     Category = apps.get_model('pirateWarApp', 'Category')
     for i in range(1, 4):
         for l in range(1, 4):
-            activity = Activity(category=Category.objects.get(pk=i), rewardGold=l * 10, rewardWood=l * 10,
-                                rewardIron=l * 10, level=l,
-                                duration=datetime.timedelta(seconds=i*10))
+            activity = Activity(category=Category.objects.get(pk=i), rewardGold=l * 20, rewardWood=l * 20,
+                                rewardIron=l * 20, level=l,
+                                duration=datetime.timedelta(seconds=l*10))
             activity.save()
 
 

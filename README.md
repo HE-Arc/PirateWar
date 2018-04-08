@@ -36,3 +36,14 @@ Les joueurs peuvent envoyer leurs bateaux réaliser des attaques contre des autr
     - attaque d'adversaire
     - mission de transport
     - mission de défense
+    
+## Installation
+- Posséder Python 3.6
+- Télécharger ce dépôt
+- Ouvrir une console à la racine du projet
+- Installer les dépendances avec `pip install -r requirements.txt` (de préférence dans un environnement virtuel)
+- Ouvrir une console dans le dossier pirateWar
+- Exécuter `python manage.py migrate`
+- Exécuter `python manage.py runserver`
+- Se rendre sur à l'adresse fournie par manage.py
+- S'amuser!

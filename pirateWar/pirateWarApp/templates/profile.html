@@ -1,15 +1,26 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
 
 {% block title %}Profile{% endblock %}
 
 {% block content %}
 
-    <h2>Profile</h2>
-    <ul>
-        <li>Money : {{ player.money }}</li>
-        <li>Crew : {{ player.crew }}</li>
-        <li>Wood : {{ player.wood }}</li>
-        <li>Iron : {{ player.iron }}</li>
-    </ul>
+<div class='card card-profile text-center'>
+    <img alt='' class='card-img-top' src="{% static 'img/background.png' %}">
+    <div class='card-block'>
+        <a href="https://secure.gravatar.com/{{hash}}"><img width=180 alt='profile picture' class='card-img-profile' src="{{url|iriencode}}"></a>
+        <h4 class='card-title'>
+            {{user.username}}
+            <small>{{user.email}}</small>
+        </h4>
+        <div class="card-links">
+            <a href="{% url 'edit-profile' %}" class="btn btn-info">Edit</a>
+            <a href="{% url 'edit-password' %}" class="btn btn-info">Change Password</a>
+            <a href="{% url 'home' %}" class="btn btn-success">Play</a>
+        </div>
+        <div class="card-footer">We use <a href="https://gravatar.com/">Gravatar</a> to get your profile picture from your mail adress.</div>
+    </div>
+</div>
 
 {% endblock %}

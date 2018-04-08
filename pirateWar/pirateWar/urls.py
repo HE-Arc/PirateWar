@@ -13,15 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from pirateWarApp.views import (
+    AboutView, ActivityListView, AddActivityView, BuyCannonView,
+    PasswordChangeView, PlayView, ProfileView, RecruitCrewManView, ResultView,
+    SelectShipView, ShipCreateView, ShipDeleteView, ShipUpdateView,
+    UpdateProfileView,
+)
+from registration.views import RegistrationView
+
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.urls import include, path
-from django.contrib.auth import views as auth_views
-
-from pirateWarApp.views import AboutView, PlayView, ShipDeleteView, ShipCreateView, ShipUpdateView, \
-    ProfileView, ActivityListView, SelectShipView, AddActivityView, ResultView, BuyCannonView, RecruitCrewManView
-
-from registration.views import RegistrationView
 
 urlpatterns = [
     path('', login_required(PlayView.as_view()), name='home'),
@@ -47,8 +50,13 @@ urlpatterns = [
     path('player/recruit-crewman',
          login_required(RecruitCrewManView.as_view()), name='recruit'),
     path('admin/', admin.site.urls, name='admin'),
+    path('profile/',
+         login_required(ProfileView.as_view()), name='profile'),
+    path('profile/edit',
+         login_required(UpdateProfileView.as_view()), name='edit-profile'),
+    path('profile/edit-password',
+         login_required(PasswordChangeView.as_view()), name='edit-password'),
     path('accounts/', include('registration.backends.simple.urls')),
-    path('accounts/profile/', login_required(ProfileView.as_view()), name='profile'),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
     path('accounts/register/', RegistrationView.as_view(), name='register')

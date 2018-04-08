@@ -1,35 +1,83 @@
+import hashlib
+import math
+import random
+from datetime import datetime
+
+from pirateWarApp.forms import ProfileUpdateForm, ShipUpdateForm
+from pirateWarApp.models import Activity, Category, Player, Ship, User
+
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.models import User
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.forms import ModelForm
-from django.http import HttpResponseRedirect, Http404, HttpResponse
-from django.shortcuts import render, redirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.utils.timezone import utc
 from django.views import generic
 from django.views.generic import TemplateView
-from django.contrib import messages
-
-from pirateWarApp.forms import ShipUpdateForm
-from pirateWarApp.models import Ship, Player, User, Category, Activity
-from datetime import datetime
-from django.utils.timezone import utc
-import random
-import math
-
 
 # Create your views here.
+
+
 class AboutView(TemplateView):
     template_name = 'about.html'
 
 
-class ProfileView(generic.TemplateView):
+class ProfileView(TemplateView):
     template_name = 'profile.html'
 
     def get(self, request, *args, **kwargs):
-        user = request.user
-        if Player.objects.filter(user=user).count() < 1:
-            Player.objects.create(user=user, money=10,
-                                  wood=10, iron=10, crew=3, cannons=1)
-        player = Player.objects.filter(user=user).first()
-        return render(request, self.template_name, {'player': player})
+        hash = hashlib.md5()
+        hash.update(request.user.email.encode())
+        hash = hash.hexdigest()
+        url = 'https://secure.gravatar.com/avatar/' + hash
+        url += '?s=180&d=' + request.build_absolute_uri('/')
+        url += static('img/pirate.png').lstrip('/')
+        return render(request, self.template_name, {'hash': hash, 'url': url})
+
+
+class PasswordChangeView(generic.TemplateView):
+    model = User
+    template_name = 'edit_password.html'
+
+    def get(self, request, *args, **kwargs):
+        instance = User.objects.get(id=request.user.id)
+        instance.password = ""
+        form = PasswordChangeForm(request.user)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwars):
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('profile')
+        return render(request, self.template_name, {'form': form})
+
+
+class UpdateProfileView(generic.TemplateView):
+    form_class = ProfileUpdateForm
+    model = User
+    template_name = 'edit_password.html'
+
+    def get(self, request, *args, **kwargs):
+        instance = User.objects.get(id=request.user.id)
+        form = ProfileUpdateForm(instance=instance)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwars):
+        user_to_update = User.objects.get(id=request.user.id)
+        form = ProfileUpdateForm(request.POST, instance=user_to_update)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile was successfully updated!')
+            return redirect('profile')
+        return render(request, self.template_name, {'form': form})
 
 
 class PlayView(generic.TemplateView):

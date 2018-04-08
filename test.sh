@@ -2,5 +2,5 @@
 
 set -xe
 
-isort --recursive . -v
+isort --recursive .
 flake8 .

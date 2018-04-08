@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-env = os.environ.get
+import platform
+
 from django.utils import translation
 
-import platform
+env = os.environ.get
+
 
 if platform.node() == "piratewars":
     from .production import *

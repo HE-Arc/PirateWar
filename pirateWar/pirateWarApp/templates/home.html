@@ -45,47 +45,6 @@
             <div class="col-4"> Cannons</div>
             <div class="col-3"> {{ player.cannons }}</div>
         </div>
-
-        <div class="row">
-            <h2>Actions</h2>
-        </div>
-        <div class="row">
-            <form class="form-group" method="post" action="{% url 'create-ship' %}">
-                {% csrf_token %}
-                <label for="btn-buy-ship">Buy a new ship (10 wood)</label>
-                <div class="input-group">
-                    <input required type="text" class="form-control" placeholder="Ship name"
-                    aria-label="Input group example" aria-describedby="btnGroupAddon" id="shipname"
-                    name="shipname">
-                    <div class="input-group-append">
-                        <input id='btn-buy-ship' type="submit" class="btn btn-primary"
-                        data-toggle="tooltip" data-placement="right" title="Cost : 10 wood"
-                        value="Buy ship">
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <div class="row">
-            <form class="form-group" method="post" action="{% url 'build-cannon' %}">
-                {% csrf_token %}
-                <input id='btn-buy-cannon' type="submit" class="btn btn-primary"
-                data-toggle="tooltip" data-placement="right" title="Cost : 10 iron"
-                value="Build a new cannon">
-            </form>
-        </div>
-
-        <div class="row">
-            <form class="form-group" method="post" action="{% url 'recruit' %}">
-                {% csrf_token %}
-                <input id='btn-buy-cannon' type="submit" class="btn btn-primary"
-                data-toggle="tooltip" data-placement="right" title="Cost : 10 gold"
-                value="Recruit a new crewman">
-            </form>
-        </div>
-
-    </div>
-    <div class="col">
         <h2>Ships</h2>
         {% for ship in ships %}
         <div class="row mh1">
@@ -108,8 +67,45 @@
         </div>
         {% endfor %}
 
+
+
     </div>
     <div class="col">
+        <div class="row">
+            <h2>Actions</h2>
+        </div>
+        <div class="row">
+            <form class="form-group" method="post" action="{% url 'create-ship' %}">
+                {% csrf_token %}
+                <label for="btn-buy-ship">Buy a new ship (10 wood)</label>
+                <div class="input-group">
+                    <input required type="text" class="form-control" placeholder="Ship name"
+                    aria-label="Input group example" aria-describedby="btnGroupAddon" id="shipname"
+                    name="shipname">
+                    <div class="input-group-append">
+                        <input id='btn-buy-ship' type="submit" class="btn btn-primary"
+                        data-toggle="tooltip" data-placement="right" title="Cost : 10 wood"
+                        value="Buy ship">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="btn-group-vertical">
+            <form class="form-group" method="post" action="{% url 'build-cannon' %}">
+                {% csrf_token %}
+                <input id='btn-buy-cannon' type="submit" class="btn btn-primary"
+                data-toggle="tooltip" data-placement="right" title="Cost : 10 iron"
+                value="Build a new cannon">
+            </form>
+
+            <form class="form-group" method="post" action="{% url 'recruit' %}">
+                {% csrf_token %}
+                <input id='btn-buy-cannon' type="submit" class="btn btn-primary"
+                data-toggle="tooltip" data-placement="right" title="Cost : 10 gold"
+                value="Recruit a new crewman">
+            </form>
+        </div>
+
         <h2>Activities</h2>
         {% for ship in ships_activity %}
         <form method="post" action="{% url 'result' %}">
@@ -132,6 +128,7 @@
                 <a class="btn btn-dark" style="background-color: #00802b" href="{% url 'select-activity' %}" data-toggle="tooltip" data-placement="bottom" title="Send a ship to a new quest!">Select activity</a>
             </div>
         </div>
+
     </div>
     <div class="col">
         <h2>Joueurs</h2>

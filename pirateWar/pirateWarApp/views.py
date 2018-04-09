@@ -6,6 +6,7 @@ from datetime import datetime
 from pirateWarApp.forms import ProfileUpdateForm, ShipUpdateForm
 from pirateWarApp.models import Activity, Category, Player, Ship, User
 
+from django.db import transaction
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -291,28 +292,32 @@ class ShipUpdateView(UserPassesTestMixin, generic.UpdateView):
 class BuyCannonView(generic.TemplateView):
 
     def post(self, request, *args, **kwargs):
-        player = PlayView.get_player(request.user)
-        player = Player.objects.select_for_update().get(pk=player.pk)
-        if player.iron >= 10:
-            player.cannons += 1
-            player.iron -= 10
-            player.save()
-            return redirect('home')
+        with transaction.atomic():
+            player = PlayView.get_player(request.user)
+            player = Player.objects.select_for_update().get(pk=player.pk)
+            if player.iron >= 10:
+                player.cannons += 1
+                player.iron -= 10
+                player.save()
+                return redirect('home')
 
-        messages.add_message(self.request, messages.ERROR, 'Not enough iron')
-        return redirect('home')
+            messages.add_message(
+                self.request, messages.ERROR, 'Not enough iron')
+            return redirect('home')
 
 
 class RecruitCrewManView(generic.TemplateView):
 
     def post(self, request, *args, **kwargs):
-        player = PlayView.get_player(request.user)
-        player = Player.objects.select_for_update().get(pk=player.pk)
-        if player.money >= 10:
-            player.crew += 1
-            player.money -= 10
-            player.save()
-            return redirect('home')
+        with transaction.atomic():
+            player = PlayView.get_player(request.user)
+            player = Player.objects.select_for_update().get(pk=player.pk)
+            if player.money >= 10:
+                player.crew += 1
+                player.money -= 10
+                player.save()
+                return redirect('home')
 
-        messages.add_message(self.request, messages.ERROR, 'Not enough money')
-        return redirect('home')
+            messages.add_message(
+                self.request, messages.ERROR, 'Not enough money')
+            return redirect('home')

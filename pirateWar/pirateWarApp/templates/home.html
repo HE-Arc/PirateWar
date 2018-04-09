@@ -117,15 +117,14 @@
                 <div class="row mh1">
                     <form method="post" action="{% url 'result' %}">
                         {% csrf_token %}
-                        <div class="col-2"><img src="{% static 'img/1stship_3.png' %}" alt="Ship" title="Ship"
-                                                height="30"/>
+                        <div class="col-2">
+                            <img src="{% static 'img/1stship_3.png' %}" alt="Ship" title="Ship" height="30"/>
                         </div>
                         <div class="col-6">{{ ship.name }}</div>
                         <div class="col-2 time"></div>
 
                         <input id="shippk" name="shippk" type="hidden" value="{{ ship.pk }}">
-                        <div class="col-2"><input type="submit" class="btn btn-dark btn-sm result"
-                                                  style="display: none; background-color: #00802b" value="Result"></div>
+                        <div class="col-2"><input type="submit" class="btn btn-dark btn-sm result" style="display: none; background-color: #00802b" value="Result"></div>
                         <p hidden class="timestamp">{{ ship.endActivity.timestamp }}</p>
                     </form>
                 </div>

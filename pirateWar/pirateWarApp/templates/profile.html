@@ -9,7 +9,7 @@
 <div class='card card-profile text-center'>
     <img alt='' class='card-img-top' src="{% static 'img/background.png' %}">
     <div class='card-block'>
-        <a href="https://secure.gravatar.com/{{hash}}"><img width=180 alt='profile picture' class='card-img-profile' src="{{url|iriencode}}"></a>
+        <a href="https://secure.gravatar.com/{{hash}}"><img style="background-color:white;" width=180 alt='profile picture' class='card-img-profile' src="{{url|iriencode}}"></a>
         <h4 class='card-title'>
             {{user.username}}
             <small>{{user.email}}</small>

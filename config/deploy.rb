@@ -22,7 +22,7 @@ namespace :python do
             execute "python3.6 -m venv #{venv_path}"
             execute "source #{venv_path}/bin/activate"
             execute "#{venv_path}/bin/pip install -r #{release_path}/requirements.txt"
-            execute "source #{venv_path}/bin/activate; source ~/.bash_profile; python3.6 #{release_path}/pirateWar/manage.py migrate"
+            execute "source #{venv_path}/bin/activate; source ~/.bash_profile; python3.6 #{release_path}/pirateWar/manage.py migrate; yes | python3.6 #{release_path}/pirateWar/manage.py collectstatic"
         end
     end
 end

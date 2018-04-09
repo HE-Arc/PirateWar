@@ -284,3 +284,7 @@ nav, h1, h2, h3{
 .card-profile .card-links .fa.fa-facebook:hover {
     color: #2d4474;
 }
+
+form{
+    width: 100%;
+}
